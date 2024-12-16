@@ -1,0 +1,51 @@
+name: 'KMP Build Web App'
+description: 'Build the Kotlin JS Web App using Gradle'
+author: 'Mifos Initiative'
+branding:
+  icon: 'package'
+  color: 'green'
+
+inputs:
+  web_package_name:
+    description: 'Name of the web project module'
+    required: true
+
+outputs:
+  artifact-name:
+    description: 'Name of the artifact'
+    value: 'web-app'
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Java development environment
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'  # Use Zulu distribution of OpenJDK
+        java-version: '17'    # Use Java 17 version
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    # Cache Gradle dependencies and build outputs to speed up future builds
+    - name: Cache Gradle and build outputs
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+          ~/.konan
+          build
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: ${{ runner.os }}-gradle-
+
+    - name: Package Desktop App
+      shell: bash
+      run: ./gradlew jsBrowserDistribution
+
+    # Save web app as artifact
+    - name: Upload Web Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: web-app
+        path: './${{ inputs.web_package_name }}/build/dist/js/productionExecutable'
