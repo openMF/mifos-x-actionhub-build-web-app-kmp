@@ -11,6 +11,11 @@ This GitHub Action is designed to build a Kotlin Multiplatform (KMP) web applica
 - Description: Name of the web project module
 - Used to specify the correct path for building and uploading the web app artifact
 
+### `java-version`
+**Optional**: No
+- Description: Java version to use (e.g., `17`, `21`).
+- Defaults to `17` if not specified.
+
 ## Outputs
 
 ### `artifact-name`
@@ -65,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: openMF/kmp-build-web-app-action@v1.0.0
+      - uses: openMF/mifos-x-actionhub-build-web-app@v1.0.1
         with:
           web_package_name: 'web'
 ```
@@ -74,7 +79,7 @@ jobs:
 
 - GitHub Actions runner with bash support
 - Gradle project configured for Kotlin Multiplatform
-- Java 17
+- Java (configurable; defaults to 17)
 - Zulu OpenJDK distribution
 
 ## Best Practices
