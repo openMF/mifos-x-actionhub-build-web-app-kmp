@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: openMF/mifos-x-actionhub-build-web-app@v1.0.1
+      - uses: openMF/mifos-x-actionhub-build-web-app-kmp@v1.0.1
         with:
           web_package_name: 'web'
 ```
