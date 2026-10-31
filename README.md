@@ -67,7 +67,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v4
       - uses: openMF/mifos-x-actionhub-build-web-app-kmp@v1.0.1
